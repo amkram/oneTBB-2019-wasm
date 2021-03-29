@@ -168,3 +168,6 @@ ifndef BUILDING_PHASE
 #   4. gmake v3.80 doesn't support exporting of target-specific variables using
 #   the "export" keyword
 MAKEOVERRIDES =
+
+
+export compiler:=emscripten

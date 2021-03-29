@@ -1,3 +1,4 @@
+// Adapted from https://github.com/hpcwasm/wasmtbb by Alex Kramer 2021
 /*
     Copyright (c) 2005-2019 Intel Corporation
 
@@ -223,7 +224,7 @@ template<> struct atomic_selector<8> {
         #include "machine/linux_intel64.h"
     #endif
 
-#elif __linux__ || __FreeBSD__ || __NetBSD__ || __OpenBSD__
+#else
 
     #if (TBB_USE_GCC_BUILTINS && __TBB_GCC_BUILTIN_ATOMICS_PRESENT)
         #include "machine/gcc_generic.h"
@@ -241,41 +242,10 @@ template<> struct atomic_selector<8> {
         #include "machine/gcc_arm.h"
     #elif __TBB_GCC_BUILTIN_ATOMICS_PRESENT
         #include "machine/gcc_generic.h"
+    #else
+       #include "machine/linux_wasm32.h"      
     #endif
     #include "machine/linux_common.h"
-
-#elif __APPLE__
-    //TODO:  TBB_USE_GCC_BUILTINS is not used for Mac, Sun, Aix
-    #if (TBB_USE_ICC_BUILTINS && __TBB_ICC_BUILTIN_ATOMICS_PRESENT)
-        #include "machine/icc_generic.h"
-    #elif __TBB_x86_32
-        #include "machine/linux_ia32.h"
-    #elif __TBB_x86_64
-        #include "machine/linux_intel64.h"
-    #elif __POWERPC__
-        #include "machine/mac_ppc.h"
-    #endif
-    #include "machine/macos_common.h"
-
-#elif _AIX
-
-    #include "machine/ibm_aix51.h"
-
-#elif __sun || __SUNPRO_CC
-
-    #define __asm__ asm
-    #define __volatile__ volatile
-
-    #if __i386  || __i386__
-        #include "machine/linux_ia32.h"
-    #elif __x86_64__
-        #include "machine/linux_intel64.h"
-    #elif __sparc
-        #include "machine/sunos_sparc.h"
-    #endif
-    #include <sched.h>
-
-    #define __TBB_Yield() sched_yield()
 
 #endif /* OS selection */
 

@@ -1,3 +1,4 @@
+//Adapted from https://github.com/hpcwasm/wasmtbb by Alex Kramer 2021
 /*
     Copyright (c) 2005-2019 Intel Corporation
 
@@ -103,7 +104,11 @@ static const dynamic_link_descriptor MallocLinkTable[] = {
 #elif __linux__  // Note that order of these #elif's is important!
 #define MALLOCLIB_NAME "libtbbmalloc" DEBUG_SUFFIX  __TBB_STRING(.so.TBB_COMPATIBLE_INTERFACE_VERSION)
 #else
-#error Unknown OS
+    #ifndef  BUILD_WASM
+        #error Unknown OS
+    #else // Building with emscripten
+        #define MALLOCLIB_NAME "libtbbmalloc" DEBUG_SUFFIX  __TBB_STRING(.so.TBB_COMPATIBLE_INTERFACE_VERSION)
+    #endif
 #endif
 
 //! Initialize the allocation/free handler pointers.

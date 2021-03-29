@@ -46,7 +46,7 @@ namespace internal {
 #elif __linux__
 #define MALLOCLIB_NAME "libtbbmalloc" DEBUG_SUFFIX  __TBB_STRING(.so.TBB_COMPATIBLE_INTERFACE_VERSION)
 #else
-#error Unknown OS
+#define MALLOCLIB_NAME "libtbbmalloc" DEBUG_SUFFIX  __TBB_STRING(.so.TBB_COMPATIBLE_INTERFACE_VERSION)
 #endif
 
 void init_tbbmalloc() {

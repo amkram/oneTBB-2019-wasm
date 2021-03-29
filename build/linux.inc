@@ -1,3 +1,5 @@
+# Adapted from https://github.com/hpcwasm/wasmtbb by Alex Kramer 2021
+
 # Copyright (c) 2005-2019 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+
 
 ####### Detections and Commands ###############################################
 
@@ -31,6 +35,10 @@ ifeq (icc,$(compiler))
     $(warning "Unknown Intel compiler")
   endif
 endif
+
+## Emscripten
+export runtime:=emscripten_wasm32
+export arch:=wasm32
 
 ifndef arch
         uname_m:=$(shell uname -m)
@@ -53,6 +61,8 @@ ifndef arch
                 export arch:=$(uname_m)
         endif
 endif
+
+
 
 ifndef runtime
         export gcc_version:=$(shell gcc -dumpfullversion -dumpversion)
@@ -92,6 +102,8 @@ MALLOC_DLL?=$(DLL)
 LIBEXT = so
 SONAME_SUFFIX =$(shell grep TBB_COMPATIBLE_INTERFACE_VERSION $(tbb_root)/include/tbb/tbb_stddef.h | egrep -o [0-9.]+)
 
+
+
 ifeq ($(arch),ia64)
         def_prefix = lin64ipf
 endif
@@ -101,6 +113,9 @@ endif
 ifeq ($(arch),armv7)
         def_prefix = lin32
 endif
+ifeq ($(arch),wasm32)
+        def_prefix = wasm32
+endif
 ifeq (,$(def_prefix))
     ifeq (64,$(findstring 64,$(arch)))
             def_prefix = lin64
@@ -108,6 +123,7 @@ ifeq (,$(def_prefix))
             def_prefix = lin32
     endif
 endif
+
 TBB.LST = $(tbb_root)/src/tbb/$(def_prefix)-tbb-export.lst
 TBB.DEF = $(TBB.LST:.lst=.def)
 

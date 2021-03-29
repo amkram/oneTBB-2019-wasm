@@ -74,7 +74,7 @@ ifneq (,$(MALLOC.DEF))
 tbbmalloc.def: $(MALLOC.DEF)
 	$(CPLUS) $(PREPROC_ONLY) $< $(M_CPLUS_FLAGS) $(WARNING_SUPPRESS) $(INCLUDES) > $@
 
-MALLOC_LINK_FLAGS += $(EXPORT_KEY)tbbmalloc.def
+#MALLOC_LINK_FLAGS += $(EXPORT_KEY)tbbmalloc.def
 $(MALLOC.DLL): tbbmalloc.def
 endif
 
@@ -88,7 +88,7 @@ ifneq (,$(MALLOCPROXY.DEF))
 tbbmallocproxy.def: $(MALLOCPROXY.DEF)
 	$(CPLUS) $(PREPROC_ONLY) $< $(CPLUS_FLAGS) $(WARNING_SUPPRESS) $(INCLUDES) > $@
 
-PROXY_LINK_FLAGS += $(EXPORT_KEY)tbbmallocproxy.def
+#PROXY_LINK_FLAGS += $(EXPORT_KEY)tbbmallocproxy.def
 $(MALLOCPROXY.DLL): tbbmallocproxy.def
 endif
 

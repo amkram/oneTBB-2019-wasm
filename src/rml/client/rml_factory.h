@@ -1,3 +1,5 @@
+//Adapted from https://github.com/hpcwasm/wasmtbb by Alex Kramer 2021
+
 /*
     Copyright (c) 2005-2019 Intel Corporation
 
@@ -32,7 +34,7 @@
 #elif __FreeBSD__ || __NetBSD__ || __OpenBSD__ || __sun || _AIX
 #define RML_SERVER_NAME "libirml" DEBUG_SUFFIX ".so"
 #else
-#error Unknown OS
+#define RML_SERVER_NAME "libirml" DEBUG_SUFFIX ".so"
 #endif
 
 const ::rml::versioned_object::version_type CLIENT_VERSION = 2;
