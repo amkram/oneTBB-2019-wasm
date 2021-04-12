@@ -1,5 +1,3 @@
-# From https://github.com/hpcwasm/wasmtbb
-
 # Copyright (c) 2005-2019 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -58,10 +56,10 @@ ifneq (,$(gcc_version))
 endif
 
 CPLUS_FLAGS += -DBUILD_WASM 
-CPLUS_FLAGS += -D__was32__
+CPLUS_FLAGS += -D__wasm32__
 CPLUS_FLAGS += -D__emscripten__
-#CPLUS_FLAGS += -D__TBB_DYNAMIC_LOAD_ENABLED=0
-#CPLUS_FLAGS += -D__TBB_SOURCE_DIRECTLY_INCLUDED=0
+CPLUS_FLAGS += -D__TBB_DYNAMIC_LOAD_ENABLED=0
+CPLUS_FLAGS += -D__TBB_SOURCE_DIRECTLY_INCLUDED=1
 
 TBB_ASM.OBJ=
 MALLOC_ASM.OBJ=
