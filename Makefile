@@ -14,15 +14,15 @@
 
 tbb_root?=.
 include $(tbb_root)/build/common.inc
-.PHONY: default all tbb tbbmalloc tbbproxy test examples
+.PHONY: default all tbb tbbmalloc test examples
 
 #workaround for non-depend targets tbb and tbbmalloc which both depend on version_string.ver
 #According to documentation, recursively invoked make commands can process their targets in parallel
-.NOTPARALLEL: tbb tbbmalloc tbbproxy
+.NOTPARALLEL: tbb tbbmalloc
 
-default: tbb tbbmalloc $(if $(use_proxy),tbbproxy)
+default: tbb tbbmalloc 
 
-all: tbb tbbmalloc tbbproxy test examples
+all: tbb tbbmalloc test examples
 
 tbb: mkdir
 	$(MAKE) -C "$(work_dir)_debug"  -r -f $(tbb_root)/build/Makefile.tbb cfg=debug
@@ -32,11 +32,7 @@ tbbmalloc: mkdir
 	$(MAKE) -C "$(work_dir)_debug"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=debug malloc
 	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=release malloc
 
-tbbproxy: mkdir
-	$(MAKE) -C "$(work_dir)_debug"  -r -f $(tbb_root)/build/Makefile.tbbproxy cfg=debug tbbproxy
-	$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbproxy cfg=release tbbproxy
-
-test: tbb tbbmalloc $(if $(use_proxy),tbbproxy)
+test: tbb tbbmalloc
 	-$(MAKE) -C "$(work_dir)_debug"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=debug malloc_test
 	-$(MAKE) -C "$(work_dir)_debug"  -r -f $(tbb_root)/build/Makefile.test cfg=debug
 	-$(MAKE) -C "$(work_dir)_release"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=release malloc_test

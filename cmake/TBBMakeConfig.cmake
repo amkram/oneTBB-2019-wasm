@@ -41,7 +41,7 @@ function(tbb_make_config)
 
     file(MAKE_DIRECTORY ${tbb_config_dir})
 
-    set(TBB_DEFAULT_COMPONENTS tbb tbbmalloc tbbmalloc_proxy)
+    set(TBB_DEFAULT_COMPONENTS tbb tbbmalloc)
 
     if (tbb_MK_CONFIG_FOR_SOURCE)
         set(TBB_RELEASE_DIR ${tbb_MK_TBB_RELEASE_DIR})

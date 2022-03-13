@@ -20,7 +20,7 @@ include $(tbb_root)/build/common.inc
 #According to documentation, recursively invoked make commands can process their targets in parallel
 .NOTPARALLEL:
 
-.PHONY: all tbb tbbmalloc tbbproxy test test_no_depends release debug examples clean
+.PHONY: all tbb tbbmalloc test test_no_depends release debug examples clean
 
 all: release debug examples
 
@@ -118,7 +118,7 @@ test_release_no_depends: tbb_test_release_no_depends
 test_debug_no_depends: tbb_test_debug_no_depends
 
 .PHONY: tbbmalloc_release tbbmalloc_debug
-.PHONY: tbbmalloc_dll_release tbbmalloc_dll_debug tbbmalloc_proxy_dll_release tbbmalloc_proxy_dll_debug
+.PHONY: tbbmalloc_dll_release tbbmalloc_dll_debug 
 .PHONY: tbbmalloc_test tbbmalloc_test_release tbbmalloc_test_debug tbbmalloc_test_release_no_depends tbbmalloc_test_debug_no_depends
 
 tbbmalloc_release: mkdir_release
@@ -149,8 +149,6 @@ tbbmalloc_test_debug: $(call cross_cfg,tbbmalloc_debug) tbbmalloc_test_debug_no_
 tbbmalloc_test_debug_no_depends: $(call cross_cfg,mkdir_debug)
 	$(MAKE) -C "$(call cross_cfg,$(work_dir)_debug)"  -r -f $(tbb_root)/build/Makefile.tbbmalloc cfg=debug malloc_test_no_depends
 
-.PHONY: tbbproxy_release tbbproxy_debug
-.PHONY: tbbproxy_test tbbproxy_test_release tbbproxy_test_debug tbbproxy_test_release_no_depends tbbproxy_test_debug_no_depends
 
 tbbproxy_release: mkdir_release tbb_release
 	$(MAKE) -C "$(work_dir)_release" -r -f $(tbb_root)/build/Makefile.tbbproxy cfg=release tbbproxy

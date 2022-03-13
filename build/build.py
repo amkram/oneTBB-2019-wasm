@@ -88,7 +88,7 @@ else:
     libpref = 'lib'
     dll_dir = lib_dir
 
-tbb_names = ["tbb", "tbbmalloc", "tbbmalloc_proxy"]
+tbb_names = ["tbb", "tbbmalloc"]
 
 ##############################################################
 
